@@ -1,5 +1,5 @@
 <div>
     <div *ngFor="let question of questionList">
-        <a [routerLink]="question.question_id">{{question.title}}</a>
+        <a [routerLink]="question.question_id" [innerHTML]="question.title"> </a>
     </div>
 </div>
