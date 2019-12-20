@@ -41,7 +41,7 @@ export const FakeData: any = {
                 "display_name": "AndroidDev",
                 "link": "https://stackoverflow.com/users/1024973/androiddev"
             },
-            "is_answered": false,
+            "is_answered": true,
             "view_count": 4,
             "answer_count": 0,
             "score": 0,

@@ -10,7 +10,7 @@ export class HttpStackOverflowDataSource implements StackOverflowDataSource {
     constructor(private http: HttpClient) {
     }
 
-    getLatestQuestions(): Observable<Question[]> {
+    getLatestQuestions(): Observable<any[]> {
         return this.http.get<any>(`${this.apiRoot}questions/`, {
             params: {
                 page: '1',
@@ -27,7 +27,7 @@ export class HttpStackOverflowDataSource implements StackOverflowDataSource {
         }));
     }
 
-    getQuestionThread(id: number): Observable<Question> {
+    getQuestionThread(id: number): Observable<any> {
         return forkJoin([this.getQuestion(id), this.getAnswers(id)]).pipe(map(results => {
             let question = results[0];
             question.answers = results[1];
