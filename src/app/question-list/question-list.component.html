@@ -1,5 +1,7 @@
-<div>
-    <div *ngFor="let question of questionList">
-        <a [routerLink]="question.question_id" [innerHTML]="question.title"> </a>
-    </div>
+<div class="list-group">
+    <a *ngFor="let question of questionList"
+       class="list-group-item"
+       [routerLink]="question.question_id">
+        <span [innerHTML]="question.title"></span>
+    </a>
 </div>

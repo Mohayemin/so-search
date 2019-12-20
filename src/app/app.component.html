@@ -1,11 +1,17 @@
-<!--The content below is only a placeholder and can be replaced.-->
-<h1>
-    SO Search
-</h1>
-<div>
-    <a routerLink=''>Home</a> | 
-    <a routerLink='question'>Questions</a>
-</div>
-<router-outlet>
+ <div>
+     <nav class="navbar navbar-dark bg-dark">
+         <a class="navbar-brand"
+            routerLink=''>SO Search</a>
 
-</router-outlet>
+         <ul class="navbar-nav mr-auto">
+             <li class="nav-item active">
+                 <a class="nav-link"
+                    routerLink='question'>Questions</a>
+             </li>
+         </ul>
+     </nav>
+     
+     <div class="container-fluid mt-2">
+         <router-outlet></router-outlet>
+     </div>
+ </div>
