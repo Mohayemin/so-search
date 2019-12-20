@@ -1,6 +1,6 @@
 import { StackOverflowDataSource } from './stack-overflow-data-source';
 import { Question } from '../models/question';
-import { Observable } from 'rxjs';
+import { Observable, forkJoin } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
 
@@ -28,20 +28,30 @@ export class HttpStackOverflowDataSource implements StackOverflowDataSource {
     }
 
     getQuestionThread(id: number): Observable<Question> {
-        throw new Error("Method not implemented.");
+        return forkJoin([this.getQuestion(id), this.getAnswers(id)]).pipe(map(results => {
+            let question = results[0];
+            question.answers = results[1];
+            return question;
+        }))
     }
 
-    private fillAnswers(question: Question) {
-        this.http.get<any>(`${this.apiRoot}questions/${question.question_id}/answers`, {
+    private getQuestion(id: number) {
+        return this.http.get<any>(`${this.apiRoot}questions/${id}`, {
+            params: {
+                site: 'stackoverflow',
+                filter: 'withbody'
+            }
+        }).pipe(map<any, Question>(response => response.items[0]));
+    }
+
+    private getAnswers(questionId: number) {
+        return this.http.get<any>(`${this.apiRoot}questions/${questionId}/answers`, {
             params: {
                 order: 'desc',
                 sort: 'activity',
                 site: 'stackoverflow',
                 filter: 'withbody'
             }
-        }).subscribe(response => {
-            question.answers = response.items;
-            console.log(question);
-        });
+        }).pipe(map<any, any[]>(response => response.items));
     }
 }

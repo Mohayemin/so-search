@@ -16,9 +16,9 @@ import { FakeStackOverflowDataSource } from './fake-stack-overflow-data-source';
 export class StackOverflowApiService {
   dataSource: StackOverflowDataSource;
   constructor(http: HttpClient) {
-    this.dataSource = environment.production ?
-      new HttpStackOverflowDataSource(http) :
-      new FakeStackOverflowDataSource();
+    this.dataSource = environment.useFakeData ?
+      new FakeStackOverflowDataSource() :
+      new HttpStackOverflowDataSource(http);
   }
 
   getLatestQuestions() {
