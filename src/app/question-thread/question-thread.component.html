@@ -1,1 +1,12 @@
-<p>question-thread works!</p>
+<div>
+    <h2>Question</h2>
+    <h3>{{question.title}}</h3>
+    <div [innerHtml]="question.body"></div>
+</div>
+<div>
+    <h2>Answers</h2>
+    <div *ngFor="let answer of question.answers">
+        <div [innerHtml]="answer.body"></div>
+        <hr>
+    </div>
+</div>

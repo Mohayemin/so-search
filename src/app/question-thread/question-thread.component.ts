@@ -1,4 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { Question } from '../models/question';
+import { StackOverflowApiService } from '../stack-overflow-api.service';
 
 @Component({
   selector: 'ss-question-thread',
@@ -6,10 +9,13 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./question-thread.component.scss']
 })
 export class QuestionThreadComponent implements OnInit {
+  question: Question;
 
-  constructor() { }
+  constructor(private service: StackOverflowApiService
+    , private route: ActivatedRoute
+  ) { }
 
   ngOnInit() {
+    this.service.getQuestionThread(+this.route.snapshot.params['id']).subscribe(question => this.question = question);
   }
-
 }

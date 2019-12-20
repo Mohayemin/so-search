@@ -4,5 +4,7 @@ export interface Question {
     owner: any,
     creation_date: number,
     link: string,
-    title: string
+    title: string,
+    body: string,
+    answers: any[];
 }
