@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Question } from '../models/question';
-import { StackOverflowApiService } from '../stack-overflow-api.service';
+import { StackOverflowApiService } from '../services/stack-overflow-api.service';
 
 @Component({
   selector: 'ss-question-thread',

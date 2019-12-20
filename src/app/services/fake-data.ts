@@ -1,6 +1,6 @@
 
-export class FakeData {
-    static newestQuestions: any[] = [
+export const FakeData: any = {
+    newestQuestions: [
         {
             "tags": [
                 "java",
@@ -258,9 +258,8 @@ export class FakeData {
             "title": "How do I get a Fragment&#39;s variable from a class?",
             "body": "<p>I have a class whose method builds a string using the variable from a Fragment, if that Fragment is visible.</p>\n\n<p>I am currently attempting to get the fragment this way, but findFragmentById is returning null:</p>\n\n<pre><code>val fragment = (mContext as MainActivity).supportFragmentManager.findFragmentById(R.id.fragment_holder) as PaymentFragment\n\n\nval value = fragment.value\n</code></pre>\n\n<p>Here is the Fragment:</p>\n\n<pre><code>class PaymentFragment : Fragment() {\n\nprivate lateinit var value: Int\n\n}\n</code></pre>\n\n<p>What is the best way to get that fragment's value from the class?</p>\n"
         }
-    ];
-
-    static answersOfAQuestions: any[] = [
+    ],
+    answersOfAQuestions: [
         {
             "owner": {
                 "reputation": 19,
