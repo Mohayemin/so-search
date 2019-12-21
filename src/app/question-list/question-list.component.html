@@ -30,6 +30,7 @@
                 {{question.score}}
             </div>
             <div>
+                <span *ngIf="question.bounty_amount">BOUNTY: {{question.bounty_amount}}</span>
                 <a [routerLink]="question.question_id"
                    class="title"
                    [innerHTML]="question.title"></a>
