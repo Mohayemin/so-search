@@ -4,6 +4,9 @@ import { FakeData } from './fake-data';
 import * as _ from 'lodash';
 
 export class FakeStackOverflowDataSource implements StackOverflowDataSource {
+    getComments(postIds: number[]) {
+        return of([]);
+    }
     getQuestion(id: number) {
         let question = _.cloneDeep(FakeData.newestQuestions.find(q => q.question_id === id));
         return of(question);

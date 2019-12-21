@@ -2,11 +2,24 @@
     <div class="pr-2 mr-2 border-right d-flex flex-column border-r post-summary">
         <div class="score text-center mb-1"
              [ngClass]="{'bg-success': highlight}">{{post.score}}</div>
-        <div class="text-center mb-1">
+        <div class="text-center mb-1 small">
             posted {{post.creationDateLabel}} <br>
             active {{post.lastActivityDateLabel}}
         </div>
         <ss-user-card [user]="post.owner"></ss-user-card>
     </div>
-    <div [innerHtml]="post.body" class="post-body"></div>
+    <div>
+        <div [innerHtml]="post.body"
+             class="post-body"></div>
+        <div class="small"
+             *ngIf="post.comments.length">
+            <hr>
+            <div *ngFor="let comment of post.comments"
+                 class="border-bottom">
+                <span [innerHTML]="comment.body"></span> &mdash; <a [href]="comment.owner.link"
+                   target="_blank">{{comment.owner.display_name}}</a>
+            </div>
+        </div>
+
+    </div>
 </div>

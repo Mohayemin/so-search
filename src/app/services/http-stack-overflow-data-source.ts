@@ -32,6 +32,16 @@ export class HttpStackOverflowDataSource implements StackOverflowDataSource {
         }));
     }
 
+    getComments(postIds: number[]) {
+        return this.http.get<any>(`${this.apiRoot}posts/${postIds.join(';')}/comments`, {
+            params: {
+                site: 'stackoverflow',
+                filter: 'withbody',
+                key: this.apiKey
+            }
+        }).pipe(map(response => response.items));
+    }
+
     getLatestQuestions(): Observable<any[]> {
         return this.getQuestionList('creation');
     }

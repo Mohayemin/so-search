@@ -2,8 +2,13 @@
     <div class="border p-1 user-card-content">
         <img [src]="user.profile_image">
         <br>
+        <a [href]="user.link"
+           target="_blank">
+            {{user.display_name}}
+        </a>
+        <br>
         <span>
-            {{user.display_name}} <br> {{user.reputation | number}}
+            {{user.reputation | number}}
         </span>
     </div>
 </div>
