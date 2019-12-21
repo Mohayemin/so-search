@@ -21,18 +21,22 @@ export class StackOverflowApiService {
 
   getLatestQuestions() {
     return this.dataSource.getLatestQuestions().pipe(map(result => {
-      result.forEach(this.processQuestion)
+      result.forEach(this.processPost);
       return result as Question[];
     }));
   }
 
   getQuestionThread(id: number) {
-    return this.dataSource.getQuestionThread(id).pipe(map(this.processQuestion));
+    return this.dataSource.getQuestionThread(id).pipe(map(question => {
+      this.processPost(question);
+      question.answers.forEach(this.processPost);
+      return question;
+    }));
   }
 
-  private processQuestion(question: any) {
-    question.creation_date = moment.unix(question.creation_date).fromNow();
-    question.last_activity_date = moment.unix(question.last_activity_date).fromNow();
-    return question;
+  private processPost(post: any) {
+    post.creation_date = moment.unix(post.creation_date).fromNow();
+    post.last_activity_date = moment.unix(post.last_activity_date).fromNow();
+    return post;
   }
 }

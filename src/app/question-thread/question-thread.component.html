@@ -1,26 +1,22 @@
 <div *ngIf="question">
     <div>
         <div class="d-flex align-items-center">
-            <div class="score badge badge-dark mr-1">{{question.score}}</div>
             <div>
                 <h3 [innerHTML]="question.title"> </h3>
                 <div>
-                    asked {{question.creation_date}} |
-                    active {{question.last_activity_date}} |
                     viewed {{question.view_count}} times
                 </div>
             </div>
         </div>
         <hr>
-        <div [innerHtml]="question.body"></div>
-        <ss-user-card [user]="question.owner"></ss-user-card>
+        <ss-post-detail [post]="question"></ss-post-detail>
     </div>
     <hr>
     <div>
         <h2>{{question.answers.length}} Answers</h2>
+        <hr>
         <div *ngFor="let answer of question.answers">
-            <div [innerHtml]="answer.body"></div>
-            <ss-user-card [user]="answer.owner"></ss-user-card>
+            <ss-post-detail [post]="answer" [highlight]="answer.is_accepted"></ss-post-detail>
             <hr>
         </div>
     </div>

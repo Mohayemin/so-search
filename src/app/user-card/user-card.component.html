@@ -1,10 +1,9 @@
-<div class="d-flex text-center user-card">
+<div class="text-center user-card">
     <div class="border p-1 user-card-content">
-        <img [src]="user.profile_image"
-             width="48">
+        <img [src]="user.profile_image">
         <br>
         <span>
-            {{user.display_name}} <br> ({{user.reputation}})
+            {{user.display_name}} <br> {{user.reputation | number}}
         </span>
     </div>
 </div>

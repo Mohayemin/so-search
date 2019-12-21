@@ -52,7 +52,7 @@ export class HttpStackOverflowDataSource implements StackOverflowDataSource {
         return this.http.get<any>(`${this.apiRoot}questions/${questionId}/answers`, {
             params: {
                 order: 'desc',
-                sort: 'activity',
+                sort: 'votes',
                 site: 'stackoverflow',
                 filter: 'withbody',
                 key: this.apiKey

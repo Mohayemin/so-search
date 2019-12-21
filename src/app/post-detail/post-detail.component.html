@@ -1,0 +1,12 @@
+<div class="d-flex">
+    <div class="pr-2 mr-2 border-right d-flex flex-column border-r post-summary">
+        <div class="score text-center mb-1"
+             [ngClass]="{'bg-success': highlight}">{{post.score}}</div>
+        <div class="text-center mb-1">
+            posted {{post.creation_date}} <br>
+            active {{post.last_activity_date}}
+        </div>
+        <ss-user-card [user]="post.owner"></ss-user-card>
+    </div>
+    <div [innerHtml]="post.body" class="post-body"></div>
+</div>
