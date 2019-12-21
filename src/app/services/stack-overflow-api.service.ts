@@ -71,7 +71,6 @@ export class StackOverflowApiService {
       post.comments = _.filter(allComments, c => c.post_id === post[idProp]);
       post.comments.forEach(comment => {
         comment.makesObsolete = !parentQuestion.isAboutObsolete && _.includes(comment.body, "obsolete");
-        comment.question = parentQuestion;
       });
     }
 

@@ -10,5 +10,4 @@ export interface Comment {
     score: boolean;
     owner: User;
     makesObsolete: boolean;
-    question: Question;
 }
