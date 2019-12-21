@@ -6,12 +6,14 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { QuestionListComponent } from './question-list/question-list.component';
 import { QuestionThreadComponent } from './question-thread/question-thread.component';
+import { UserCardComponent } from './user-card/user-card.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     QuestionListComponent,
-    QuestionThreadComponent
+    QuestionThreadComponent,
+    UserCardComponent
   ],
   imports: [
     BrowserModule,

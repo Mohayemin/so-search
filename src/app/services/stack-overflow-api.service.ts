@@ -31,7 +31,8 @@ export class StackOverflowApiService {
   }
 
   private processQuestion(question: any) {
-    question.creation_date = moment.unix(question.creation_date).toDate();
+    question.creation_date = moment.unix(question.creation_date).fromNow();
+    question.last_activity_date = moment.unix(question.last_activity_date).fromNow();
     return question;
   }
 }
