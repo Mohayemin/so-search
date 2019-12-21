@@ -25,7 +25,8 @@
     <div *ngFor="let question of questionList"
          class="list-group-item">
         <div class="d-flex">
-            <div class="score mr-3">
+            <div class="score mr-3"
+            [ngClass]="{'bg-success': question.is_answered}">
                 {{question.score}}
             </div>
             <div>

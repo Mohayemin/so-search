@@ -10,7 +10,7 @@ import * as _ from 'lodash';
 })
 export class QuestionListComponent implements OnInit {
   questionList: Question[] = [];
-  sortBy: string = 'creation_date';
+  sortBy: string = 'score';
   constructor(private service: StackOverflowApiService) {
 
   }
