@@ -4,6 +4,7 @@ import { Observable, forkJoin } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
+import * as moment from 'moment';
 
 export class HttpStackOverflowDataSource implements StackOverflowDataSource {
     apiRoot = 'https://api.stackexchange.com/2.2/';
@@ -12,14 +13,15 @@ export class HttpStackOverflowDataSource implements StackOverflowDataSource {
     constructor(private http: HttpClient) {
     }
 
-    getLatestQuestions(): Observable<any[]> {
+    private getQuestionList(sortBy: string) {
+        let oneWeekAgo = moment().add(-7, "days").unix();
         return this.http.get<any>(`${this.apiRoot}questions/`, {
             params: {
                 page: '1',
                 pageSize: '10',
-                fromdate: '1576281600', // todo: make dynamic
+                fromdate: oneWeekAgo + '',
                 order: 'desc',
-                sort: 'creation',
+                sort: sortBy,
                 tagged: 'android',
                 site: 'stackoverflow',
                 filter: 'withbody',
@@ -30,22 +32,12 @@ export class HttpStackOverflowDataSource implements StackOverflowDataSource {
         }));
     }
 
+    getLatestQuestions(): Observable<any[]> {
+        return this.getQuestionList('creation');
+    }
+
     getMostVotedQuestions() {
-        return this.http.get<any>(`${this.apiRoot}questions/`, {
-            params: {
-                page: '1',
-                pageSize: '10',
-                fromdate: '1576281600', // todo: make dynamic
-                order: 'desc',
-                sort: 'votes',
-                tagged: 'android',
-                site: 'stackoverflow',
-                filter: 'withbody',
-                key: this.apiKey
-            }
-        }).pipe(map<any, Question[]>(response => {
-            return response.items;
-        }));
+        return this.getQuestionList('votes');
     }
 
     getQuestionThread(id: number): Observable<any> {
