@@ -1,0 +1,5 @@
+<a *ngFor="let tag of tags"
+   class="badge badge-info mr-1"
+   [href]="'https://stackoverflow.com/questions/tagged/' + tag"
+   target="_blank"
+   [innerHTML]="tag"></a>

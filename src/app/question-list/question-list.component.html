@@ -1,24 +1,55 @@
+<h2>
+    Recent Android Questions
+</h2>
+<div class="mb-2">
+    <div class="btn-group btn-group-toggle">
+        <label class="btn btn-secondary"
+               [ngClass]="{active: sortBy==='creation_date'}">
+            <input type="radio"
+                   name="sort"
+                   value="creation_date"
+                   (change)="sortQuestions()"
+                   [(ngModel)]="sortBy"> Newest first
+        </label>
+        <label class="btn btn-secondary"
+               [ngClass]="{active: sortBy==='score'}">
+            <input type="radio"
+                   name="options"
+                   value="score"
+                   (change)="sortQuestions()"
+                   [(ngModel)]="sortBy"> Most voted first
+        </label>
+    </div>
+</div>
 <div class="list-group">
     <div *ngFor="let question of questionList"
          class="list-group-item">
-        <a [routerLink]="question.question_id"
-           [innerHTML]="question.title"></a>
-        <div>
-            <span class="small">Asked by {{question.owner.display_name}} on
-                {{question.creation_date}}</span>
-            <span class="mx-1">|</span>
-            <span>Score <span class="badge badge-success">{{question.score}}</span></span>
-            <span class="mx-1">|</span>
-            <span>Answers <span class="badge badge-success">{{question.answer_count}}</span></span>
-            <span *ngIf="!question.is_answered">
-                <span class="mx-1">|</span>
-                <span class="badge badge-warning">No accepted answers</span>
-            </span>
-            <span class="float-right">
-                <span *ngFor="let tag of question.tags"
-                      class="badge badge-info mr-1"
-                      [innerHTML]="tag"></span>
-            </span>
+        <div class="d-flex">
+            <div class="score mr-3">
+                {{question.score}}
+            </div>
+            <div>
+                <a [routerLink]="question.question_id"
+                   class="title"
+                   [innerHTML]="question.title"></a>
+                <div>
+                    <span class="small">Asked by <a [href]="question.owner.link"
+                           target="_blank">{{question.owner.display_name}}</a>
+                        {{question.creationDateLabel}}</span>
+                    <span class="mx-1">|</span>
+                    <span>{{question.answer_count}} Answers</span>
+                    <span *ngIf="!question.is_answered">
+                        <span class="mx-1">|</span>
+                        <a class="badge badge-warning"
+                           [href]="question.link"
+                           target="_blank">Be the first to answers</a>
+                    </span>
+                    <span class="mx-1">|</span>
+                    <span>
+                        <ss-taglist [tags]="question.tags"></ss-taglist>
+                    </span>
+                </div>
+            </div>
         </div>
     </div>
 </div>

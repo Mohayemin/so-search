@@ -1,7 +1,8 @@
 import { Observable } from 'rxjs';
+import { Question } from '../models/question';
 
 export interface StackOverflowDataSource {
-    getLatestQuestions(): Observable<any[]>;
-    getMostVotedQuestions(): Observable<any[]>;
-    getQuestionThread(id: number): Observable<any>;
+    getLatestQuestions(): Observable<Question[]>;
+    getMostVotedQuestions(): Observable<Question[]>;
+    getQuestionThread(id: number): Observable<Question>;
 }

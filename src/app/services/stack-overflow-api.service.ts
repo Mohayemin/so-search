@@ -9,6 +9,7 @@ import * as moment from 'moment';
 import * as _ from 'lodash';
 import { Question } from '../models/question';
 import { forkJoin } from 'rxjs';
+import { Post } from '../models/post';
 
 @Injectable({
   providedIn: 'root'
@@ -24,7 +25,7 @@ export class StackOverflowApiService {
   getQuestionList() {
     return forkJoin([this.dataSource.getLatestQuestions(), this.dataSource.getMostVotedQuestions()]).pipe(map(responses => {
       let all = _.unionBy(responses[0], responses[1], q => q.question_id);
-      let questions = all.map(this.processPost);
+      let questions = all.map(this.processPost) as Question[];
       return questions;
     }))
   }
@@ -37,9 +38,9 @@ export class StackOverflowApiService {
     }));
   }
 
-  private processPost(post: any) {
-    post.creation_date = moment.unix(post.creation_date).fromNow();
-    post.last_activity_date = moment.unix(post.last_activity_date).fromNow();
+  private processPost(post: Post) {
+    post.creationDateLabel = moment.unix(post.creation_date).fromNow();
+    post.lastActivityDateLabel = moment.unix(post.last_activity_date).fromNow();
     return post;
   }
 }
