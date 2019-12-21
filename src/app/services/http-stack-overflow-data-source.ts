@@ -3,9 +3,11 @@ import { Question } from '../models/question';
 import { Observable, forkJoin } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
+import { environment } from 'src/environments/environment';
 
 export class HttpStackOverflowDataSource implements StackOverflowDataSource {
     apiRoot = 'https://api.stackexchange.com/2.2/';
+    apiKey: string = environment.stackAppsApiKey;
 
     constructor(private http: HttpClient) {
     }
@@ -20,7 +22,8 @@ export class HttpStackOverflowDataSource implements StackOverflowDataSource {
                 sort: 'creation',
                 tagged: 'android',
                 site: 'stackoverflow',
-                filter: 'withbody'
+                filter: 'withbody',
+                key: this.apiKey
             }
         }).pipe(map<any, Question[]>(response => {
             return response.items;
@@ -39,7 +42,8 @@ export class HttpStackOverflowDataSource implements StackOverflowDataSource {
         return this.http.get<any>(`${this.apiRoot}questions/${id}`, {
             params: {
                 site: 'stackoverflow',
-                filter: 'withbody'
+                filter: 'withbody',
+                key: this.apiKey
             }
         }).pipe(map<any, Question>(response => response.items[0]));
     }
@@ -50,7 +54,8 @@ export class HttpStackOverflowDataSource implements StackOverflowDataSource {
                 order: 'desc',
                 sort: 'activity',
                 site: 'stackoverflow',
-                filter: 'withbody'
+                filter: 'withbody',
+                key: this.apiKey
             }
         }).pipe(map<any, any[]>(response => response.items));
     }
