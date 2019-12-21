@@ -11,6 +11,7 @@ import { Question } from '../models/question';
 import { forkJoin } from 'rxjs';
 import { Post } from '../models/post';
 import { Comment } from '../models/comment';
+import { Answer } from '../models/answer';
 
 @Injectable({
   providedIn: 'root'
@@ -43,7 +44,7 @@ export class StackOverflowApiService {
       let ids = question.answers.map(a => a.answer_id).concat([question.question_id]);
       return this.dataSource.getComments(ids).pipe(map(comments => {
         this.processPost(question, comments, "question_id");
-        question.answers.forEach(a => this.processPost(a, comments, "answer_id"));
+        question.answers.forEach(a => this.processAnswer(a, comments));
         return question;
       }));
     }));
@@ -57,5 +58,12 @@ export class StackOverflowApiService {
     if (allComments && idProp)
       post.comments = _.filter(allComments, c => c.post_id === post[idProp])
     return post;
+  }
+
+  private processAnswer(answer: Answer, allComments: Comment[]) {
+    this.processPost(answer, allComments, "answer_id");
+    answer.comments.forEach(c => {
+      c.hasObsoleteKeyword = c.body.indexOf("obsolete") > -1;
+    });
   }
 }

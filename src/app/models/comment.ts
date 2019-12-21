@@ -8,4 +8,5 @@ export interface Comment {
     edited: boolean;
     score: boolean;
     owner: User;
+    hasObsoleteKeyword: boolean;
 }
