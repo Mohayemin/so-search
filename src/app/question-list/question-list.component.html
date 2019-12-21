@@ -40,12 +40,8 @@
                         {{question.creationDateLabel}}</span>
                     <span class="mx-1">|</span>
                     <span>{{question.answer_count}} Answers</span>
-                    <span *ngIf="!question.is_answered">
-                        <span class="mx-1">|</span>
-                        <a class="badge badge-warning"
-                           [href]="question.link"
-                           target="_blank">Be the first to answers</a>
-                    </span>
+                    <span class="mx-1">|</span>
+                    <ss-answer-link [question]="question"></ss-answer-link>
                     <span class="mx-1">|</span>
                     <span>
                         <ss-taglist [tags]="question.tags"></ss-taglist>

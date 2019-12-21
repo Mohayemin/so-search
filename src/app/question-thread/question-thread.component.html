@@ -9,7 +9,6 @@
                         viewed {{question.view_count}} times
                     </span>
                 </div>
-
             </div>
         </div>
         <hr>
@@ -17,7 +16,9 @@
     </div>
     <hr>
     <div>
-        <h2>{{question.answers.length}} Answers</h2>
+        <h2>{{question.answers.length}} Answer<span *ngIf="question.answers.length!==1">s</span>
+            &nbsp;<ss-answer-link [question]="question"></ss-answer-link>
+        </h2>
         <hr>
         <div *ngFor="let answer of question.answers">
             <ss-post-detail [post]="answer"

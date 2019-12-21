@@ -10,6 +10,7 @@ import { QuestionThreadComponent } from './question-thread/question-thread.compo
 import { UserCardComponent } from './user-card/user-card.component';
 import { PostDetailComponent } from './post-detail/post-detail.component';
 import { TaglistComponent } from './taglist/taglist.component';
+import { AnswerLinkComponent } from './answer-link/answer-link.component';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,8 @@ import { TaglistComponent } from './taglist/taglist.component';
     QuestionThreadComponent,
     UserCardComponent,
     PostDetailComponent,
-    TaglistComponent
+    TaglistComponent,
+    AnswerLinkComponent
   ],
   imports: [
     BrowserModule,
