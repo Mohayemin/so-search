@@ -10,6 +10,9 @@ const routes: Routes = [{
 }, {
   path: 'question/:id',
   component: QuestionThreadComponent
+}, {
+  path: '**',
+  redirectTo: 'question'
 }];
 
 @NgModule({
