@@ -16,7 +16,7 @@
             <hr>
             <div *ngFor="let comment of post.comments"
                  class="border-bottom p-1"
-                 [ngClass]="{'obsolete': comment.hasObsoleteKeyword}">
+                 [ngClass]="{'obsolete': comment.makesObsolete}">
                 <span [innerHTML]="comment.body"></span> &mdash; <a [href]="comment.owner.link"
                    target="_blank">{{comment.owner.display_name}}</a>
             </div>

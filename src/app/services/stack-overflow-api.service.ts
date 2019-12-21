@@ -27,7 +27,7 @@ export class StackOverflowApiService {
   getQuestionList() {
     return forkJoin([this.dataSource.getLatestQuestions(), this.dataSource.getMostVotedQuestions()]).pipe(map(responses => {
       let all = _.unionBy(responses[0], responses[1], q => q.question_id);
-      let questions = all.map(post => this.processPost(post)) as Question[];
+      let questions = all.map(post => this.processPost(post, post)) as Question[];
       return questions;
     }));
   }
@@ -42,28 +42,39 @@ export class StackOverflowApiService {
       return question;
     })).pipe(mergeMap(question => {
       let ids = question.answers.map(a => a.answer_id).concat([question.question_id]);
-      return this.dataSource.getComments(ids).pipe(map(comments => {
-        this.processPost(question, comments, "question_id");
-        question.answers.forEach(a => this.processAnswer(a, comments));
-        return question;
-      }));
+      return this.dataSource.getComments(ids)
+        .pipe(map(comments => this.processQuestion(question, comments)));
     }));
 
     return questionObs;
   }
 
-  private processPost(post: Post, allComments?: Comment[], idProp?: string) {
-    post.creationDateLabel = moment.unix(post.creation_date).fromNow();
-    post.lastActivityDateLabel = moment.unix(post.last_activity_date).fromNow();
-    if (allComments && idProp)
-      post.comments = _.filter(allComments, c => c.post_id === post[idProp])
-    return post;
+  processQuestion(question: Question, allComments: Comment[]) {
+    this.processPost(question, question, allComments, "question_id");
+    question.isAboutObsolete = _.includes(question.title, "obsolete") || _.includes(question.body, "obsolete");
+    question.answers.forEach(answer => this.processPost(question, answer, allComments, "answer_id"));
+
+    if (!question.isAboutObsolete) {
+      let hasCommentAboutobsolete = _.some(allComments, c => c.makesObsolete);
+      if (hasCommentAboutobsolete) {
+        question.hasObsoleteAnswer = true;
+      }
+    }
+
+    return question;
   }
 
-  private processAnswer(answer: Answer, allComments: Comment[]) {
-    this.processPost(answer, allComments, "answer_id");
-    answer.comments.forEach(c => {
-      c.hasObsoleteKeyword = c.body.indexOf("obsolete") > -1;
-    });
+  private processPost(parentQuestion: Question, post: Post, allComments?: Comment[], idProp?: string) {
+    post.creationDateLabel = moment.unix(post.creation_date).fromNow();
+    post.lastActivityDateLabel = moment.unix(post.last_activity_date).fromNow();
+    if (allComments && idProp) {
+      post.comments = _.filter(allComments, c => c.post_id === post[idProp]);
+      post.comments.forEach(comment => {
+        comment.makesObsolete = !parentQuestion.isAboutObsolete && _.includes(comment.body, "obsolete");
+        comment.question = parentQuestion;
+      });
+    }
+
+    return post;
   }
 }

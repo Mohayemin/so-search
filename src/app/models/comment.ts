@@ -1,4 +1,5 @@
 import { User } from './user';
+import { Question } from './question';
 
 export interface Comment {
     comment_id: number;
@@ -8,5 +9,6 @@ export interface Comment {
     edited: boolean;
     score: boolean;
     owner: User;
-    hasObsoleteKeyword: boolean;
+    makesObsolete: boolean;
+    question: Question;
 }

@@ -11,5 +11,7 @@ export interface Question extends Post {
     bounty_amount: number;
     title: string;
     answers: Answer[];
+    hasObsoleteAnswer: boolean;
+    isAboutObsolete: boolean;
 }
 
