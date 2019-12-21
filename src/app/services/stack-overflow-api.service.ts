@@ -31,11 +31,19 @@ export class StackOverflowApiService {
   }
 
   getQuestionThread(id: number) {
-    return this.dataSource.getQuestionThread(id).pipe(map(question => {
+    let questionObs = forkJoin([
+      this.dataSource.getQuestion(id),
+      this.dataSource.getAnswers(id)
+    ]).pipe(map(results => {
+      let question = results[0];
+      question.answers = results[1];
       this.processPost(question);
       question.answers.forEach(this.processPost);
+
       return question;
     }));
+
+    return questionObs;
   }
 
   private processPost(post: Post) {

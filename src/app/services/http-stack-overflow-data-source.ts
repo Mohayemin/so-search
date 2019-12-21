@@ -40,15 +40,7 @@ export class HttpStackOverflowDataSource implements StackOverflowDataSource {
         return this.getQuestionList('votes');
     }
 
-    getQuestionThread(id: number): Observable<any> {
-        return forkJoin([this.getQuestion(id), this.getAnswers(id)]).pipe(map(results => {
-            let question = results[0];
-            question.answers = results[1];
-            return question;
-        }))
-    }
-
-    private getQuestion(id: number) {
+    getQuestion(id: number) {
         return this.http.get<any>(`${this.apiRoot}questions/${id}`, {
             params: {
                 site: 'stackoverflow',
@@ -58,7 +50,7 @@ export class HttpStackOverflowDataSource implements StackOverflowDataSource {
         }).pipe(map<any, Question>(response => response.items[0]));
     }
 
-    private getAnswers(questionId: number) {
+    getAnswers(questionId: number) {
         return this.http.get<any>(`${this.apiRoot}questions/${questionId}/answers`, {
             params: {
                 order: 'desc',
