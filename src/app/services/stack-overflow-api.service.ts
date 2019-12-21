@@ -6,7 +6,9 @@ import { StackOverflowDataSource } from './stack-overflow-data-source';
 import { HttpStackOverflowDataSource } from './http-stack-overflow-data-source';
 import { FakeStackOverflowDataSource } from './fake-stack-overflow-data-source';
 import * as moment from 'moment';
+import * as _ from 'lodash';
 import { Question } from '../models/question';
+import { forkJoin } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -19,11 +21,12 @@ export class StackOverflowApiService {
       new HttpStackOverflowDataSource(http);
   }
 
-  getLatestQuestions() {
-    return this.dataSource.getLatestQuestions().pipe(map(result => {
-      result.forEach(this.processPost);
-      return result as Question[];
-    }));
+  getQuestionList() {
+    return forkJoin([this.dataSource.getLatestQuestions(), this.dataSource.getMostVotedQuestions()]).pipe(map(responses => {
+      let all = _.unionBy(responses[0], responses[1], q => q.question_id);
+      let questions = all.map(this.processPost);
+      return questions;
+    }))
   }
 
   getQuestionThread(id: number) {

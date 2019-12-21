@@ -30,6 +30,24 @@ export class HttpStackOverflowDataSource implements StackOverflowDataSource {
         }));
     }
 
+    getMostVotedQuestions() {
+        return this.http.get<any>(`${this.apiRoot}questions/`, {
+            params: {
+                page: '1',
+                pageSize: '10',
+                fromdate: '1576281600', // todo: make dynamic
+                order: 'desc',
+                sort: 'votes',
+                tagged: 'android',
+                site: 'stackoverflow',
+                filter: 'withbody',
+                key: this.apiKey
+            }
+        }).pipe(map<any, Question[]>(response => {
+            return response.items;
+        }));
+    }
+
     getQuestionThread(id: number): Observable<any> {
         return forkJoin([this.getQuestion(id), this.getAnswers(id)]).pipe(map(results => {
             let question = results[0];
