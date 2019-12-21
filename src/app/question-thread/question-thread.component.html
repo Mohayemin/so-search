@@ -4,8 +4,12 @@
             <div>
                 <h3 [innerHTML]="question.title"> </h3>
                 <div>
-                    viewed {{question.view_count}} times
+                    <ss-taglist [tags]="question.tags"></ss-taglist>
+                    <span>
+                        viewed {{question.view_count}} times
+                    </span>
                 </div>
+
             </div>
         </div>
         <hr>
@@ -16,7 +20,8 @@
         <h2>{{question.answers.length}} Answers</h2>
         <hr>
         <div *ngFor="let answer of question.answers">
-            <ss-post-detail [post]="answer" [highlight]="answer.is_accepted"></ss-post-detail>
+            <ss-post-detail [post]="answer"
+                            [highlight]="answer.is_accepted"></ss-post-detail>
             <hr>
         </div>
     </div>
