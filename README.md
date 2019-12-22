@@ -3,8 +3,9 @@
 The project his hosted at https://so-search.firebaseapp.com/
 
 ## Requsted features
-- Shows 10 newest and 10 most voted questions of stackoverflow.com that are created in the past week.
-- Clicking on the title of the question takes to the question thread.
+- **Question list**: Shows 10 newest and 10 most voted android questions of stackoverflow.com that are created in the past week.
+- **Question thread**: Clicking on the title of the question takes to the question thread. The thread includes all answers and all comments. The answers are sorted by most voted first. The the score of accepted answer is marked green.   
+Note that, the question thread is not limited to the questions in the question list. Specifying any Stack Overflow question ID in the URL will load that question.
 
 ## Additional features
 **1. Identify obsolete answers**  
