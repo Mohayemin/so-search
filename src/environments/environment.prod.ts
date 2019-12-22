@@ -1,4 +1,5 @@
 export const environment = {
   production: true,
-  useFakeData: false
+  useFakeData: false,
+  stackAppsApiKey: 'UpTRdSOv7CgAALgGaqB0pw(('
 };
