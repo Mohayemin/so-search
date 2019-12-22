@@ -1,9 +1,9 @@
 import { User } from './user';
-import { Question } from './question';
 
 export interface Comment {
     comment_id: number;
     creation_date: number;
+    creationDateLabel: string;
     post_id: number;
     body: string;
     edited: boolean;

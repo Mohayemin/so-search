@@ -5,6 +5,10 @@
         <div class="text-center mb-1 small">
             posted {{post.creationDateLabel}} <br>
             active {{post.lastActivityDateLabel}}
+            <ng-container *ngIf="post.last_edit_date">
+                <br>
+                edited {{post.lastEditDateLabel}}
+            </ng-container>
         </div>
         <ss-user-card [user]="post.owner"></ss-user-card>
     </div>
@@ -19,6 +23,7 @@
                  [ngClass]="{'obsolete': comment.makesObsolete}">
                 <span [innerHTML]="comment.body"></span> &mdash; <a [href]="comment.owner.link"
                    target="_blank">{{comment.owner.display_name}}</a>
+                <span class="text-secondary">&nbsp;{{comment.creationDateLabel}}</span>
             </div>
         </div>
 

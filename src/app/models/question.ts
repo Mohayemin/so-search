@@ -13,5 +13,6 @@ export interface Question extends Post {
     answers: Answer[];
     hasObsoleteAnswer: boolean;
     isAboutObsolete: boolean;
+    isAcceptedAnswerObsolete: boolean;
 }
 
