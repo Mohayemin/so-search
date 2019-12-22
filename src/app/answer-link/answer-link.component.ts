@@ -16,13 +16,20 @@ export class AnswerLinkComponent implements OnInit {
 
   ngOnInit() {
     this.url = this.question.link + '#post-editor';
-    if (this.question.answers.length > 0) {
-      this.label = 'Add an answer';
-      this.cssClass = 'badge badge-secondary';
+
+    if (this.question.answer_count > 0) {
+      if (this.question.is_answered) {
+        this.setValues('Add an answer', 'secondary');
+      } else {
+        this.setValues('Add an acceptable answer', 'info');
+      }
     } else {
-      this.label = 'Be the first to answer';
-      this.cssClass = 'badge badge-warning';
+      this.setValues('Be the first to answer', 'warning');
     }
   }
 
+  private setValues(label: string, badgeType: string) {
+    this.label = label;
+    this.cssClass = `badge badge-${badgeType}`;
+  }
 }
