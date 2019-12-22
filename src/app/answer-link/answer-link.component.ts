@@ -21,7 +21,7 @@ export class AnswerLinkComponent implements OnInit {
       if (this.question.is_answered) {
         this.setValues('Add an answer', 'secondary');
       } else {
-        this.setValues('Add an acceptable answer', 'info');
+        this.setValues('Add an acceptable answer', 'success');
       }
     } else {
       this.setValues('Be the first to answer', 'warning');
