@@ -1,9 +1,8 @@
 <div *ngIf="question">
     <div>
-        <div class="d-flex align-items-center">
+        <div>
             <div>
-                <h3 [innerHTML]="question.title"
-                    [ngClass]="{'obsolete': question.hasObsoleteAnswer}"> </h3>
+                <h3 [innerHTML]="question.title"> </h3>
                 <div>
                     <ss-taglist [tags]="question.tags"></ss-taglist>
                     <span>
@@ -11,6 +10,16 @@
                     </span>
                 </div>
             </div>
+            <h4 *ngIf="question.hasObsoleteAnswer">
+                <span *ngIf="question.isAcceptedAnswerObsolete"
+                      class="badge badge-danger">
+                    The excepted answer is obsolete
+                </span>
+                <span *ngIf="!question.isAcceptedAnswerObsolete"
+                      class="badge badge-warning">
+                    There are obsolete answers in this question
+                </span>
+            </h4>
         </div>
         <hr>
         <ss-post-detail [post]="question"></ss-post-detail>
@@ -23,7 +32,8 @@
         <hr>
         <div *ngFor="let answer of question.answers">
             <ss-post-detail [post]="answer"
-                            [highlight]="answer.is_accepted"></ss-post-detail>
+                            [isAccepted]="answer.is_accepted"
+                            [isObsolete]="answer.isObsolete"></ss-post-detail>
             <hr>
         </div>
     </div>

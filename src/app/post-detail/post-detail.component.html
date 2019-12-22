@@ -1,7 +1,7 @@
 <div class="d-flex">
     <div class="pr-2 mr-2 border-right d-flex flex-column border-r post-summary">
         <div class="score text-center mb-1"
-             [ngClass]="{'bg-success': highlight}">{{post.score}}</div>
+             [ngClass]="{'bg-success': isAccepted}">{{post.score}}</div>
         <div class="text-center mb-1 small">
             posted {{post.creationDateLabel}} <br>
             active {{post.lastActivityDateLabel}}
@@ -13,14 +13,24 @@
         <ss-user-card [user]="post.owner"></ss-user-card>
     </div>
     <div>
+        <h4 *ngIf="isObsolete">
+            <span class="badge badge-danger"
+                  *ngIf="isAccepted">
+                This accepted answer is obsolete
+            </span>
+            <span class="badge badge-warning"
+                  *ngIf="!isAccepted">
+                This answer is obsolete
+            </span>
+        </h4>
         <div [innerHtml]="post.body"
              class="post-body"></div>
         <div class="small"
              *ngIf="post.comments.length">
             <hr>
             <div *ngFor="let comment of post.comments"
-                 class="border-bottom p-1"
-                 [ngClass]="{'obsolete': comment.makesObsolete}">
+                 class="border-bottom p-1 my-0"
+                 [ngClass]="{'alert alert-danger': comment.makesObsolete}">
                 <span [innerHTML]="comment.body"></span> &mdash; <a [href]="comment.owner.link"
                    target="_blank">{{comment.owner.display_name}}</a>
                 <span class="text-secondary">&nbsp;{{comment.creationDateLabel}}</span>

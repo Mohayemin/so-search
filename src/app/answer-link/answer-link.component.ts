@@ -16,7 +16,7 @@ export class AnswerLinkComponent implements OnInit {
 
   ngOnInit() {
     this.url = this.question.link + '#post-editor';
-    if (this.question.is_answered) {
+    if (this.question.answers.length > 0) {
       this.label = 'Add an answer';
       this.cssClass = 'badge badge-secondary';
     } else {

@@ -8,7 +8,8 @@ import { Post } from '../models/post';
 })
 export class PostDetailComponent implements OnInit {
   @Input() post: Post;
-  @Input() highlight: boolean;
+  @Input() isAccepted: boolean;
+  @Input() isObsolete: boolean;
   
   constructor() { }
 
